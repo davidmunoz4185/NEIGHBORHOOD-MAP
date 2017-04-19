@@ -7,8 +7,7 @@ var museums = [
   {title: "Museo Thyssen-Bornemisza", lat: 40.416111, lng: -3.695}, 
   {title: "Museo Reina Sofía", lat: 40.408889, lng: -3.694444},
   {title: "Museo de Arte Contemporáneo de Madrid", lat: 40.427852, lng: -3.710681},
-  {title: "Museo Nacional de Antropología de Madrid", lat: 40.407694, lng: -3.688975},
-  {title: "Museo Fermín Trujillo de Madrid", lat: 40.407694, lng: -3.688975}
+  {title: "Museo Nacional de Antropología de Madrid", lat: 40.407694, lng: -3.688975}
 ];
 
 // Object Musem ...
@@ -23,6 +22,9 @@ var Museum = function(data){
     content: '<div>' + self.infoMuseum + '</div>'
   });
 
+  // GOOGLE PHOTO REFERENCE
+  var photoURL = 'https://maps.googleapis.com/maps/api/streetview?size=300x150&location='+ data.lat + ',' + data.lng + '&fov=90&heading=235&pitch=10&key=AIzaSyAKF6HT0C44x_nQ3pf5jHNY0qRUXdg7fNk';
+
   // WikiPedia API
   var titleSearch = data.title.replace(" ", "%20");
   var wikiUrl = 'http://es.wikipedia.org/w/api.php?action=opensearch&search=' + titleSearch + '&format=json&callback=wikiCallback';
@@ -35,21 +37,17 @@ var Museum = function(data){
     url: wikiUrl,
     dataType: "jsonp",
     jsonp: "callback",
-    success: function( response ) {
-      //console.log(response);
+    success: function(response) {
+      console.log(response);
       console.log(response[3]);
       var museumURL = response[3];
-      self.infoMuseum = '<div>' + data.title + '</div><div><a href="' + response[3] + '"></a></div>';
+      console.log(museumURL);
+      if(museumURL!=""){
+        self.infoMuseum = '<div><a href="' + museumURL + '">'  + data.title + '</a></div>';
+        self.infoMuseum = self.infoMuseum + '<div><img src="' + photoURL + '"></div>';
+      }
+      else{self.infoMuseum = '<div>' + data.title + '</div><div>Info Not Available in WikiPedia ...</div>';}
       self.infoWindow.setContent(self.infoMuseum);
-      //var articleList = response[1];
-      //console.log(articleList);
-      //for (var i = 0; i < articleList.length; i++) {
-        //articleStr = articleList[i];
-        //var url = 'http://es.wikipedia.org/wiki/' + articleStr;
-        //console.log(url);
-        //$wikiElem.append('<li><a href="' + url + '">' + articleStr + '</a></li>');
-      //};
-
       clearTimeout(wikiRequestTimeout);
     }
   });
@@ -66,6 +64,7 @@ var Museum = function(data){
     return true;
   }, this);
 
+  
   self.marker.addListener('click', function(){
     self.infoWindow.setContent(self.infoMuseum);
     self.infoWindow.open(map, this);
@@ -82,7 +81,7 @@ var Museum = function(data){
 
 // KnockOut Model - View - Octopus ...
 function AppViewModel() {
-  // Plaza Cibeles Center Map ...
+  // Plaza de Cibeles Center Map ...
   map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 40.419272, lng: -3.693125},
           zoom: 15
@@ -93,7 +92,7 @@ function AppViewModel() {
   self.museumsList = ko.observableArray([]);
   self.museum2Search = ko.observable("");
 
-  // Add museums into map
+  // Add museums into map ...
   museums.forEach(function(museum){
     self.museumsList.push(new Museum(museum));
   });
@@ -125,7 +124,7 @@ function initMap() {
   ko.applyBindings(new AppViewModel());
 }
 
-
+// Error Handling Google´s Map ...
 function mapLoadException() {
   alert("It seems your internet connection has an issue ...");
 }
