@@ -14,9 +14,8 @@ git clone https://github.com/davidmunoz4185/NEIGHBORHOOD-MAP.git
 
 ```
 
-or just go to the following url:
+and open "index.html" in your favorite browser ...
 
-https://davidmunoz4185.github.io/NEIGHBORHOOD-MAP/
 
 ### Which info ...
 
