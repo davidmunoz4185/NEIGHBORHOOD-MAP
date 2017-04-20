@@ -7,7 +7,18 @@ var museums = [
   {title: "Museo Thyssen-Bornemisza", lat: 40.416111, lng: -3.695}, 
   {title: "Museo Reina Sofía", lat: 40.408889, lng: -3.694444},
   {title: "Museo de Arte Contemporáneo de Madrid", lat: 40.427852, lng: -3.710681},
-  {title: "Museo Nacional de Antropología de Madrid", lat: 40.407694, lng: -3.688975}
+  {title: "Museo Nacional de Antropología de Madrid", lat: 40.407694, lng: -3.688975},
+  {title: "Museo Cerralbo", lat: 40.423684, lng: -3.714577},
+  {title: "Museo Sorolla", lat: 40.435404, lng: -3.692539},
+  {title: "Museo Romanticismo Madrid", lat: 40.425869, lng: -3.698839},
+  {title: "Museo de América Madrid", lat: 40.438131, lng: -3.722069},
+  {title: "Museo del Traje Madrid", lat: 40.44, lng: -3.728611},
+  {title: "Museo Lázaro Galdiano", lat: 40.448189, lng: -3.683594},
+  {title: "Museo del Ferrocarril Madrid", lat: 40.398333, lng: -3.694167},
+  {title: "Museo del Aire Madrid", lat: 40.368744, lng: -3.80085},
+  {title: "Museo Naval Madrid", lat: 40.417456, lng: -3.692804},
+  {title: "Museo del Aire Madrid", lat: 40.368744, lng: -3.80085},
+  {title: "Real Academia de Bellas Artes", lat: 40.418056, lng: -3.700278}
 ];
 
 // Object Musem ...
@@ -38,13 +49,10 @@ var Museum = function(data){
     dataType: "jsonp",
     jsonp: "callback",
     success: function(response) {
-      console.log(response);
-      console.log(response[3]);
       var museumURL = response[3];
-      console.log(museumURL);
       if(museumURL!=""){
-        self.infoMuseum = '<div><a href="' + museumURL + '">'  + data.title + '</a></div>';
-        self.infoMuseum = self.infoMuseum + '<div><img src="' + photoURL + '"></div>';
+        self.infoMuseum = '<div>'  + data.title + '</div>';
+        self.infoMuseum = self.infoMuseum + '<div><a href="' + museumURL + '" alt="' + data.title + '"><img src="' + photoURL + '"></a></div>';
       }
       else{self.infoMuseum = '<div>' + data.title + '</div><div>Info Not Available in WikiPedia ...</div>';}
       self.infoWindow.setContent(self.infoMuseum);
@@ -84,7 +92,7 @@ function AppViewModel() {
   // Plaza de Cibeles Center Map ...
   map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 40.419272, lng: -3.693125},
-          zoom: 15
+          zoom: 13
   });
 
   // Show Museums locations ...

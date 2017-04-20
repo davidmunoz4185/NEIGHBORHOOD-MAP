@@ -9,15 +9,12 @@
 <body>
   <div class="container">
     <div class="options-box">
-      <h1>Madrid´s Museums ...</h1>
+      <h1>Visit Madrid!!!</h1>
       <div>
-        <input id="places-search" type="text" placeholder="Pssst!!! Museo del Prado (for instance) ..." data-bind="textInput: museum2Search">
-        <hr>
-        <div class="museums-list">
-          <ul class="results" id="results" data-bind="foreach: museums2Search">
-            <li class="place" id="place" data-bind="text: title, click: bounce"></li>
-          </ul>
-        </div>
+        <input id="places-search" type="text" placeholder="Museo del Prado (my favorite ...)" data-bind="textInput: museum2Search">
+        <ul class="museums-list" data-bind="foreach: museums2Search">
+          <li class="place" id="place" data-bind="text: title, click: bounce"></li>
+        </ul>
       </div>
     </div>
     <div class="map" id="map"></div>
