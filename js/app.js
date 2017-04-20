@@ -17,7 +17,6 @@ var museums = [
   {title: "Museo del Ferrocarril Madrid", lat: 40.398333, lng: -3.694167},
   {title: "Museo del Aire Madrid", lat: 40.368744, lng: -3.80085},
   {title: "Museo Naval Madrid", lat: 40.417456, lng: -3.692804},
-  {title: "Museo del Aire Madrid", lat: 40.368744, lng: -3.80085},
   {title: "Real Academia de Bellas Artes", lat: 40.418056, lng: -3.700278}
 ];
 
@@ -51,10 +50,10 @@ var Museum = function(data){
     success: function(response) {
       var museumURL = response[3];
       if(museumURL!=""){
-        self.infoMuseum = '<div>'  + data.title + '</div>';
-        self.infoMuseum = self.infoMuseum + '<div><a href="' + museumURL + '" alt="' + data.title + '"><img src="' + photoURL + '"></a></div>';
+        self.infoMuseum = '<div class="info-window"><div class="museum-title">'  + data.title + '</div>';
+        self.infoMuseum = self.infoMuseum + '<hr><div><a href="' + museumURL + '" alt="' + data.title + '"><img src="' + photoURL + '"></a></div></div>';
       }
-      else{self.infoMuseum = '<div>' + data.title + '</div><div>Info Not Available in WikiPedia ...</div>';}
+      else{self.infoMuseum = '<div>' + data.title + '</div><div class="wiki-error">Info Not Available in WikiPedia ...</div>';}
       self.infoWindow.setContent(self.infoMuseum);
       clearTimeout(wikiRequestTimeout);
     }
